@@ -1,2 +1,5 @@
 export const GET_SCRIPTS = 'GET_SCRIPTS'
 export const RUN_SCRIPT = 'RUN_SCRIPT'
+export const SET_ISRUNNING = 'SET_ISRUNNING'
+export const SET_ISERROR = 'SET_ISERROR'
+export const SET_RESULTS = 'SET_RESULTS'

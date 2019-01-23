@@ -31,14 +31,19 @@ router.get('/:filename', async function (req, res) {
   }
   function onProcessError(err) {
     log += 'ERROR:' + err + '\n'
-    res.status(500)
-    res.send(log)
+    errorOccurred = true
+    // res.status(500)
+    // res.send(log)
   }
   function onProcessExit(exitCode) {
-    log += 'process exited with code ' + exitCode
-    res.send(log)
+    if (exitCode) log += 'process exited with code ' + exitCode
+    res.send({
+      errorOccurred,
+      log
+    })
   }
   let log = ''
+  let errorOccurred = false
   const filePath = path.join('/scripts/', req.params.filename)
   runPythonFile(filePath, onProcessOutput, onProcessError, onProcessExit)
 })

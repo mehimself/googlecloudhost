@@ -14,7 +14,7 @@
             </p>
           </v-card-text>
           <v-card-text>
-            <h1>Python Scripts</h1>
+            <h1>Run Python Scripts</h1>
             <div v-if="results">
               <h4>Result</h4>
               <pre>{{results}}</pre>
@@ -33,10 +33,10 @@
                 <v-chip
                   v-else
                   @click="run(name)"
-                  color="green"
+                  :color="color"
                   text-color="white">
                   <v-avatar
-                    v-if="isRunning"
+                    v-if="$store.state.python.isRunning"
                   >
                     <v-icon>play_arrow</v-icon>
                   </v-avatar>
@@ -62,11 +62,17 @@
         lastScriptRun: ''
       }
     },
-    computed: mapState(namespacePrefix, [
-      'scripts',
-      'results',
-      'isRunning'
-    ]),
+    computed: {
+      ...mapState({
+        scripts: state => state.python.scripts,
+        isError: state => state.python.isError, // broken
+        isRunning: state => state.python.isRunning, // broken
+        results: state => state.python.results
+      }),
+      color() {
+        return this.$store.state.python.isError ? 'red' : 'green'
+      }
+    },
     methods: {
       run(name) {
         this.lastScriptRun = name
